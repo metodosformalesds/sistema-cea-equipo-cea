@@ -1,0 +1,51 @@
+
+////////////////////////////////////////////HEADER//////////////////////////////////////////////////////
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web&display=swap');
+
+.title-name {
+    text-align: center;
+    margin: 0;
+    font-size: 4em;
+    font-family: Titillium Web;
+    font-weight: normal;
+    color:#114C90;
+}
+
+.title-name-large {
+    font-size: 8em;
+}
+////////////////////////////////////////////HEADER//////////////////////////////////////////////////////
+
+
+#division{
+    max-width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#uacjlogo{
+    max-width: 30%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+////////////////////////////////////////////FOOTER//////////////////////////////////////////////////////
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.5em;
+}
+
+.main-footer{
+	position: relative;
+	clear: both;
+    background:#114C90;
+    margin-top: 12.16%;
+}
+
+.main-footer address{
+    text-align: center;
+    color:#FFF;
+}
+////////////////////////////////////////////FOOTER//////////////////////////////////////////////////////

@@ -1,0 +1,234 @@
+<ion-content>
+  <!--/////////////////////////////////////////////HEADER///////////////////////////////////////////////-->
+<ion-header class="main-header">
+    <nav class="nav main-nav btn">
+        <ul>
+                <li><a href="/login">USUARIO</a></li>
+                <li><a>CITAS</a></li>
+                <li><a href="/bitacora">BITACORA</a></li>
+                <li><a href="/reporte">REPORTE</a></li>
+        </ul>
+    </nav>
+    <h1 class="title-name title-name-large">Citas</h1>
+  </ion-header>
+  <!--/////////////////////////////////////////////HEADER///////////////////////////////////////////////-->
+<!--/////////////////////////////////////////////REGISTRAR CITAS//////////////////////////////////////////-->
+    <ion-row>
+    <ion-col width-50 style="text-align: center">
+    <ion-button (click)="oculto = !oculto" color="success">Registrar</ion-button>
+    </ion-col>
+    </ion-row>
+
+<div *ngIf="oculto">
+  <ion-item>
+    <ion-label position="floating">Nombre</ion-label>
+    <ion-input [(ngModel)]="nombre" type="text"></ion-input>
+  </ion-item>
+  <ion-item>
+      <ion-label>Fecha y hora (Día/Mes/Hora/Minutos)</ion-label>
+      <ion-datetime displayFormat="D MMM H:mm" [(ngModel)]="fecha"></ion-datetime>
+    </ion-item>
+      <ion-item>
+          <ion-label position="floating">Carrera</ion-label>
+          <ion-input [(ngModel)]="carrera" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Motivo</ion-label>
+            <ion-input [(ngModel)]="motivo" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Notas</ion-label>
+            <ion-input [(ngModel)]="notas" type="text"></ion-input>
+        </ion-item>
+
+        <ion-row>
+        <ion-col width-50 style="text-align: center">
+        <ion-button (click)="guardar()" color="primary">Guardar</ion-button>
+        </ion-col>
+        </ion-row>
+
+  </div>
+  <!--/////////////////////////////////////////////REGISTRAR CITAS//////////////////////////////////////////-->
+
+<!--////////////////////////////////////////////CALENDARIO////////////////////////////////////////////-->
+
+<ion-row>
+
+  <ion-col size="4" text-center>
+    <ion-button fill="clear" (click)="back()">
+      <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-col>
+
+  <ion-col size="4" text-center>
+    <ion-title>
+      {{viewTitle}}
+    </ion-title>
+  </ion-col>
+
+  <ion-col size="4" text-center>
+    <ion-button fill="clear" (click)="next()">
+      <ion-icon name="arrow-forward" slot="icon-only"></ion-icon>
+    </ion-button>
+  </ion-col>
+
+</ion-row>
+      <!---->
+    <calendar
+    [eventSource]="eventSource"
+    [calendarMode]="calendar.mode"
+    [currentDate]="calendar.currentDate"
+    (onEventSelected)="onEventSelected($event)"
+    (onTitleChanged)="onViewTitleChanged($event)"
+    (onTimeSelected)="onTimeSelected($event)"
+    (onCurrentDateChanged)="onCurrentDateChanged($event)"
+    [showEventDetail] = "false"
+    >
+    </calendar>
+
+<!--/////////////////////////////////////////////CALENDARIO//////////////////////////////////////////-->
+
+<!--/////////////////////////////////////////////LISTA CITAS//////////////////////////////////////////-->
+<br>
+<div id = "contenedorLista">
+  <section class="content-section container">
+  <h2 class="section-header">Lista de Citas</h2>
+  </section>
+
+    <div class="content-section container-lista" *ngIf="listadoCita && listadoCita.length > 0">
+      <ion-item color="secondary">
+        <ion-label>Nombre</ion-label>
+        <ion-label>Fecha</ion-label>
+        <ion-label>Carrera</ion-label>
+        <ion-label>Motivo</ion-label>
+        <ion-label>Notas</ion-label>
+        <ion-label><br></ion-label>
+      </ion-item>
+      <ion-item *ngFor="let item of listadoCita">
+        <ion-label>{{item.Nombre}}</ion-label>
+        <ion-label>{{item.Fecha}}</ion-label>
+        <ion-label>{{item.Carrera}}</ion-label>
+        <ion-label>{{item.Motivo}}</ion-label>
+        <ion-label>{{item.Notas}}</ion-label>
+      <ion-label>
+        <ion-button (click)="editocita(item)" color ="light">Editar</ion-button>
+        <div *ngIf="Editar && item === selectedItem">
+          <ion-item>
+            <ion-label position="floating">Nombre</ion-label>
+            <ion-input [(ngModel)]="nombre" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>DD MMM H:mm</ion-label>
+            <ion-datetime displayFormat="D MMM H:mm" [(ngModel)]="fecha"></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Carrera</ion-label>
+            <ion-input [(ngModel)]="carrera" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Motivo</ion-label>
+            <ion-input [(ngModel)]="motivo" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Notas</ion-label>
+            <ion-input [(ngModel)]="notas" type="text"></ion-input>
+          </ion-item>
+
+          <ion-row>
+            <ion-col width-50 style="text-align: center">
+              <ion-button (click)="editar(item.ID)" color="primary">Guardar</ion-button>
+            </ion-col>
+          </ion-row>
+        </div>
+
+        <ion-button (click)="borrar(item.ID)" color="danger">Borrar</ion-button>
+      </ion-label>
+      </ion-item>
+    </div>
+
+
+    <div class="text-center" *ngIf="listadoCita && listadoCita.length === 0">
+      No se encontraron citas para la fecha seleccionada
+    </div>
+
+    <br>
+    <div class="text-center">
+      <ion-button (click)="listadoCitaTotal()" color="primary">Mostrar todas las citas</ion-button>
+      <div *ngIf="registrar">
+        <div class="content-section container-lista" *ngIf="listadoCita && listadoCita.length > 0">
+          <ion-item color="secondary">
+            <ion-label>Nombre</ion-label>
+            <ion-label>Fecha</ion-label>
+            <ion-label>Carrera</ion-label>
+            <ion-label>Motivo</ion-label>
+            <ion-label>Notas</ion-label>
+            <ion-label><br></ion-label>
+          </ion-item>
+          <ion-item *ngFor="let item of listadoCita">
+            <ion-label>{{item.Nombre}}</ion-label>
+            <ion-label>{{item.Fecha}}</ion-label>
+            <ion-label>{{item.Carrera}}</ion-label>
+            <ion-label>{{item.Motivo}}</ion-label>
+            <ion-label>{{item.Notas}}</ion-label>
+          <ion-label>
+            <ion-button (click)="editocita(item)" color ="light">Editar</ion-button>
+            <div *ngIf="Editar && item === selectedItem">
+              <ion-item>
+                <ion-label position="floating">Nombre</ion-label>
+                <ion-input [(ngModel)]="nombre" type="text"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label>DD MMM H:mm</ion-label>
+                <ion-datetime displayFormat="D MMM H:mm" [(ngModel)]="fecha"></ion-datetime>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Carrera</ion-label>
+                <ion-input [(ngModel)]="carrera" type="text"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Motivo</ion-label>
+                <ion-input [(ngModel)]="motivo" type="text"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Notas</ion-label>
+                <ion-input [(ngModel)]="notas" type="text"></ion-input>
+              </ion-item>
+    
+              <ion-row>
+                <ion-col width-50 style="text-align: center">
+                  <ion-button (click)="editar(item.ID)" color="primary">Guardar</ion-button>
+                </ion-col>
+              </ion-row>
+            </div>
+    
+            <ion-button (click)="borrar(item.ID)" color="danger">Borrar</ion-button>
+          </ion-label>
+          </ion-item>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+<!--////////////////////////////////////////////FOOTER//////////////////////////////////////////////////////
+<ion-footer class="main-footer">
+  <div class="container main-footer-container">
+  <h3 class="title-name">CEA</h3>
+  </div>
+</ion-footer>
+-->
+<ion-footer class="main-footer">
+    <div class="container main-footer-container">
+      <address>
+        Email:	  al000000@alumnos.uacj.mx<br>
+        Telefono:  65600000000<br>
+        Pagina:	  http://www.uacj.mx
+      </address>
+    </div>
+</ion-footer>
+<!--////////////////////////////////////////////FOOTER//////////////////////////////////////////////////////-->
+
+</ion-content>
+<!--/////////////////////////////////////////////LISTA CITAS//////////////////////////////////////////-->
+

@@ -1,0 +1,66 @@
+
+<ion-content>
+  <!--/////////////////////////////////////////////HEADER///////////////////////////////////////////////-->
+<ion-header class="main-header">
+    <h1 class="title-name title-name-large">CEA</h1>
+  </ion-header>
+  <!--/////////////////////////////////////////////HEADER///////////////////////////////////////////////-->
+  
+
+  <div id = "division" class="ion-padding">
+    <ion-img id = 'uacjlogo' src="../assets/uacj-logo.png"></ion-img>
+
+    <form class="form" [formGroup]="validations_form" (ngSubmit)="loginUser(validations_form.value)" >
+      
+      <ion-item class="top" >
+          <ion-label  position="floating" >Email</ion-label>
+          <ion-input type="email" formControlName="email" ></ion-input>
+      </ion-item>
+        
+      <div class="validation-errors" >
+        <ng-container *ngFor="let validation of validation_messages.email">
+          <div class="error-message" *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+    
+        <ion-item >
+          <br>
+          <ion-label  position="floating">Password</ion-label>
+          <ion-input type="password"  formControlName="password" class="form-controll" required ></ion-input>
+        </ion-item>
+
+        <div class="validation-errors" >
+          <ng-container *ngFor="let validation of validation_messages.password">
+
+            <div  class="error-message" *ngIf="validations_form.get('password').hasError(validation.type) && (validations_form.get('password').dirty || validations_form.get('password').touched)">
+              {{ validation.message }}
+            </div>
+
+          </ng-container>
+        </div>
+        
+        <br>
+
+        <div >
+          <ion-button shape="round" size="block" class="submit-btn" type="submit" >Log In</ion-button>
+          <label  class="error-message">{{errorMessage}}</label>
+        </div>
+  </form>
+  </div>
+
+
+    
+  <!--////////////////////////////////////////////FOOTER//////////////////////////////////////////////////////-->
+    <ion-footer class="main-footer">
+      <div class="container">
+        <address>
+          Email:	  al000000@alumnos.uacj.mx<br>
+          Telefono:  65600000000<br>
+          Pagina:	  http://www.uacj.mx
+        </address>
+      </div>
+  </ion-footer>
+  <!--////////////////////////////////////////////FOOTER//////////////////////////////////////////////////////-->
+</ion-content>
